@@ -3,20 +3,14 @@ var currentDay = document.getElementById("currentDay");
 //use moment.js to display current time/date in currentDay
 currentDay.textContent = moment().format('MMMM Do YYYY, h:mm:ss a');
 
-// WHEN I scroll down
-// THEN I am presented with time blocks for standard business hours
-
-
-// WHEN I view the time blocks for that day
-// THEN each time block is color-coded to indicate whether it is in the past, present, or future
-
+//function that decides which css class each row gets for its color
 function colorChange() {
     var hour = moment().hour();
-    console.log(hour);
     //for each with time-block class, run this function
     $(".time-block").each(function(){
         //the variable rowHour turns the array string into number. split removes row from # for array.
         var rowHour = parseInt($(this).attr("id").split("-")[1]);
+        //checks if the rowHour is less than, equal to, or more than the hour for choosing past, present, or future class; then applies it
         if (rowHour < hour) {
             $(this).addClass("past");
         }
@@ -35,14 +29,7 @@ function colorChange() {
 
 colorChange();
 
-// WHEN I click into a time block
-// THEN I can enter an event
-
-// WHEN I click the save button for that time block
-// THEN the text for that event is saved in local storage
-// WHEN I refresh the page
-// THEN the saved events persist
-
+// when save button is clicked, saves the key/value to localStorage
 $(".saveBtn").on("click", function() {
     var saveKey = $(this).parent().attr("id");
     var saveValue = $(this).siblings(".description").val();
@@ -50,7 +37,7 @@ $(".saveBtn").on("click", function() {
     localStorage.setItem(saveKey, saveValue);
 });
 
-//pull row info from localStorage
+//pull row info from localStorage and displays it in the description
 $("#row-9 .description").val(localStorage.getItem("row-9"));
 $("#row-10 .description").val(localStorage.getItem("row-10"));
 $("#row-11 .description").val(localStorage.getItem("row-11"));
